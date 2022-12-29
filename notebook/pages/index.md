@@ -16,11 +16,15 @@ Evidence creates pages from markdown files. The file for this page is:
 # Run SQL
 Write queries using markdown code fences ` ``` `:
 
-```orders_by_month
+```species_in_ga
 select
-  *
+  count(*) as listing_count,
+  sum(count(*)) over (order by esa_listing_date) cum_total,
+  esa_listing_date
 from analytics.species_by_state
-where state = 'GA'
+-- where state = 'GA'
+group by esa_listing_date
+order by esa_listing_date desc
 ```
 
 You can see both the SQL and the query results by interacting with the query above.
@@ -32,32 +36,17 @@ You can see both the SQL and the query results by interacting with the query abo
 # Include Values in Text
 Return values from queries in text: 
 
-Last month customers placed <Value data={orders_by_month} column=number_of_orders/> orders.
+The cumulative total of listed species from GA is <Value data={species_in_ga} column=cum_total/>
+as of the date: <Value data={species_in_ga} column=esa_listing_date/>.
 
 Sometimes you need something *bigger*: 
-<BigValue data={orders_by_month} value=sales_usd0k />
-
-👉 Add another `<BigValue/>` above showing `average_order_value_usd2`.
+<BigValue data={species_in_ga} value=cum_total />
 
 # Add Charts & Components
 Charts can be included in a single line of code:
-
-<BarChart data = {orders_by_month} y=sales_usd0k title = 'Sales by Month, USD' />
-
-👉 Change the chart to a `LineChart`.
+<LineChart data={species_in_ga} x=esa_listing_date y=cum_total/>
 
 # Use More Powerful Features ⚡
 Evidence supports using logic & loops to determine what text and data is displayed.
 
 <BigLink href="/powerful-features">Using Logic & Loops &rarr;</BigLink>
-
-# Share your Project 
-To get your project online, see the deployment instructions in the [settings menu](/settings). More info is available in our [docs](https://docs.evidence.dev/deployment/deployment-overview).
-
-If you would prefer not to self-host your project, you might be interested in our upcoming cloud service, [Evidence Cloud](https://du3tapwtcbi.typeform.com/to/kwp7ZD3q). 
-
-# Get Support 💬
-- Message us on [Slack](https://join.slack.com/t/evidencedev/shared_invite/zt-uda6wp6a-hP6Qyz0LUOddwpXW5qG03Q)
-- See all the charts and components in the [component library](https://docs.evidence.dev/features/charts/examples)
-- Read the [Docs](https://docs.evidence.dev/)
-- Open an issue on [Github](https://github.com/evidence-dev/evidence)
