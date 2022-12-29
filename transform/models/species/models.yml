@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: threatened_endangered_extinct_species
+    description: >
+      US FWS species data filtered to only include species marked "Threatened" or
+      "Endangered", and those with listing dates included
+    columns:
+      - name: scientific_name
+        tests: [not_null, unique]
+      - name: esa_listing_status
+        tests:
+          - accepted_values:
+              values:
+                - Endangered
+                - Threatened
+                - Extinction
+      - name: esa_listing_date
+        tests: [not_null]
+  - name: species_by_state
+    description: >
+      Uses the filtered FWS species data to give each species a row for each of the
+      states it's found in
+    columns:
+      - name: esa_listing_status
+        tests:
+          - accepted_values:
+              values:
+                - Endangered
+                - Threatened
+                - Extinction
+      - name: esa_listing_date
+        tests: [not_null]

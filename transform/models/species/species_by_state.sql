@@ -1,12 +1,12 @@
 {{
   config(
     materialized='table',
-    tags=['species_data', 'threatened', 'endangered', 'by_state']
+    tags=['species_data', 'threatened', 'endangered', 'extinct', 'by_state']
   )
 }}
 
 with src_species as (
-    select * from {{ref('threatened_endangered_species')}}
+    select * from {{ref('threatened_endangered_extinct_species')}}
 )
 
 , just_states as (
