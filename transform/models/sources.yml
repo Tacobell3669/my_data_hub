@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: public
+    description: >
+      All of my data currently sits in this source schema
+    schema: public
+    tables:
+    - name: fws_species_data
+      description: >
+        Data on different US-based species from the US Fish and Wildlife Service,
+        including their listing status (threatened, endangered, etc), listing date,
+        and the states they're found in

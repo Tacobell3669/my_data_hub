@@ -6,7 +6,7 @@
 }}
 
 with dated as (
-    select * from fws_species_data
+    select * from {{source('public', 'fws_species_data')}}
     where "ESA Listing Date" != ''
 )
 
