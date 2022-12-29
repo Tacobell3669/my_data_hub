@@ -1,0 +1,6 @@
+[ 	
+	{	"entity" : "fws_species_data",
+		"path" : "./data/FWS_Species_Data_Explorer.csv",
+		"keys" : ["Scientific Name"]
+	}
+]

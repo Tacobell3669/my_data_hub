@@ -1,0 +1,45 @@
+version: 1
+default_environment: dev
+project_id: 2fc8ab00-de4f-4675-92c5-388d2a79d35d
+plugins:
+  extractors:
+  - name: tap-peloton
+    variant: meltanolabs
+    pip_url: git+https://github.com/Tacobell3669/tap-peloton.git@50df625bfb3e075a6254923e5a18a3ff0c9b525d
+    executable: tap-peloton
+    capabilities:
+    - catalog
+    - discover
+    - state
+    config:
+      username: $TAP_PELOTON_USERNAME
+      password: $TAP_PELOTON_PASSWORD
+      recent_workouts_number: $TAP_PELOTON_RECENT_WORKOUTS_NUMBER
+  - name: tap-csv
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-csv.git
+    config:
+      csv_files_definition: csv_files_def.json
+  loaders:
+  - name: target-postgres
+    variant: meltano
+    pip_url: git+https://github.com/MeltanoLabs/target-postgres
+    config:
+      database: $WAREHOUSE_DB
+      url: $WAREHOUSE_URL
+      schema: $WAREHOUSE_SCHEMA
+      role: $WAREHOUSE_ROLE
+      user: $WAREHOUSE_USER
+      password: $WAREHOUSE_PASS
+      port: $WAREHOUSE_PORT
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
+  transformers:
+  - name: dbt-postgres
+    variant: dbt-labs
+    pip_url: dbt-core~=1.3.0 dbt-postgres~=1.3.0
+environments:
+- name: dev
+- name: staging
+- name: prod
