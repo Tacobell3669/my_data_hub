@@ -3,8 +3,8 @@ version: 2
 models:
   - name: threatened_endangered_extinct_species
     description: >
-      US FWS species data filtered to only include species marked "Threatened" or
-      "Endangered", and those with listing dates included
+      US FWS species data filtered to only include species marked "Threatened",
+      "Endangered", or "Extinction", and those with listing dates included
     columns:
       - name: scientific_name
         tests: [not_null, unique]
@@ -30,5 +30,25 @@ models:
                 - Threatened
                 - Extinction
       - name: esa_listing_date
+        tests: [not_null]
+  - name: cumulative_count_by_state
+    description: >
+      Aggregates the number of species listed "Threatened", "Endangered", or "Extinction"
+      for each state each year, recording the cumulative count for each state over time
+    columns:
+      - name: state
+        tests: [not_null]
+      - name: listing_year
+        tests: [not_null]
+      - name: cumulative_count
+        tests: [not_null]
+  - name: cumulative_count_by_year
+    description: >
+      Records a cumulative count of the number of species listed "Threatened",
+      "Endangered", or "Extinction" each year
+    columns:
+      - name: listing_year
+        tests: [not_null]
+      - name: cumulative_count
         tests: [not_null]
         

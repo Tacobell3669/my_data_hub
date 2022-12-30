@@ -2,3 +2,4 @@
 /.meltano
 .env
 /custom_taps
+.vscode/
